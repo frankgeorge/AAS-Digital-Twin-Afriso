@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: docker.io/library/mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db:Z
+
+  aas-env:
+    image: docker.io/eclipsebasyx/aas-environment:2.0.0-SNAPSHOT
+    container_name: aas-env
+    depends_on:
+      - mongo
+    environment:
+      - BASYX_BACKEND=MongoDB
+      - SPRING_DATA_MONGODB_HOST=mongo
+      - SPRING_DATA_MONGODB_PORT=27017
+    ports:
+      - "8081:8081"
+
+  aas-registry:
+    image: docker.io/eclipsebasyx/aas-registry-log-mongodb:2.0.0-SNAPSHOT
+    container_name: aas-registry
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017
+    ports:
+      - "8083:8080"
+
+  submodel-registry:
+    image: docker.io/eclipsebasyx/submodel-registry-log-mongodb:2.0.0-SNAPSHOT
+    container_name: submodel-registry
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017
+    ports:
+      - "8084:8080"
+
+  aas-web-ui:
+    image: docker.io/eclipsebasyx/aas-gui:latest
+    container_name: aas-web-ui
+    environment:
+      - ALLOW_EDITING=true
+      - ALLOW_UPLOADING=true
+    ports:
+      - "3000:3000"
