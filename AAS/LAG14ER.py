@@ -9,23 +9,30 @@ asset_inforamtion = model.AssetInformation(
 )
 
 # create the Asset AdministrationShell
-identifier = 'url'
+# TODO : model.MultiLanguageNameType() need english name?
 ass = model.AssetAdministrationShell(
-    
-    id_short=LAG14ER,
-    display_name=[
-        model.LangStringNameType(language="en", text="LAG14ER"),
-        model.LangStringNameType(language="de", text="LAG14ER")
-    ]
-    
-    #identifiable
-    id_=
-    discription= ,
-    administartion= ,
-    submodel= ,
-    derived_from= ,
+    asset_information=asset_inforamtion,
+    id_short='LAG14ER',
+    display_name=model.MultiLanguageNameType(
+        {"en": "LAG14ER", "de": "LAG14ER"}
+    ),
+    id_='https://www.afriso.com/aas/LAG14ER',
+    description=model.MultiLanguageTextType(
+        {"de": "Steuergerät LAG-14 ER / Leckanzeiger"}
+    ),
+    administration=model.AdministrativeInformation(
+        version='1',
+        revision='0'
+    ),
+    submodel={
+        model.ModelReference((model.Key(model.KeyTypes.SUBMODEL, 'https://www.afriso.com/submodel/nameplate/LAG14ER'),), model.Submodel),
+        model.ModelReference((model.Key(model.KeyTypes.SUBMODEL, 'https://www.afriso.com/submodel/handover/LAG14ER'),), model.Submodel),
+        model.ModelReference((model.Key(model.KeyTypes.SUBMODEL, 'https://www.afriso.com/submodel/techdata/LAG14ER'),), model.Submodel),
+        model.ModelReference((model.Key(model.KeyTypes.SUBMODEL, 'https://www.afriso.com/submodel/carbon/LAG14ER'),), model.Submodel),
+        model.ModelReference((model.Key(model.KeyTypes.SUBMODEL, 'https://www.afriso.com/submodel/maintenance/LAG14ER'),), model.Submodel),
+    },
+    derived_from=None,
 )
-
 
 # create the Submodel object
 
