@@ -100,7 +100,7 @@ def main():
         object_store = DictIdentifiableStore(read_aas_json_file(f))
 
     file_store = aasx.DictSupplementaryFileContainer()
-    aasx_path = os.path.join("..","aasx", "LAG14ER.aasx")
+    aasx_path = os.path.join(base_dir, "..", "aasx", "LAG14ER.aasx")
 
     with aasx.AASXWriter(aasx_path) as writer:
         writer.write_aas_objects(
@@ -112,5 +112,14 @@ def main():
         )
 
     print(f"----------------------------------------- aasx created : ----------------------------------------- {aasx_path}")
+
+    import requests
+    upload_url = "http://localhost:8081/upload"
+    
+    with open(aasx_path, "rb") as f:
+        #(multipart/form-data)
+        res = requests.post(upload_url, files={"file": f})
+        print(f"server upload result: {res.status_code} - {res.text}")
+
 if __name__ == '__main__':
     main()
