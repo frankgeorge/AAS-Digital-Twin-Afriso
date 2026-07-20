@@ -103,7 +103,10 @@ def process_excel(excel_path):
     print(f"----------------------------------------- aasx created : ----------------------------------------- {aasx_path}")
 
     import requests
-    upload_url = "http://localhost:8081/upload"
+    
+    upload_url = "http://localhost:8080/upload"
+        
+    print(f"Uploading {file_name}.aasx to {upload_url}...")
     
     try:
         with open(aasx_path, "rb") as f:
