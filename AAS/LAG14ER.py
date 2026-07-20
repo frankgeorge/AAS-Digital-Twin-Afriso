@@ -104,7 +104,12 @@ def process_excel(excel_path):
 
     import requests
     
-    upload_url = "http://localhost:8080/upload"
+    if file_name == "LAG14ER":
+        upload_url = "http://localhost:8081/upload"
+    elif file_name == "PrimoVent":
+        upload_url = "http://localhost:8082/upload"
+    else:
+        upload_url = "http://localhost:8081/upload" # default fallback
         
     print(f"Uploading {file_name}.aasx to {upload_url}...")
     
