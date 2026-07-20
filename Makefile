@@ -1,24 +1,32 @@
-up:
+VENV := .venv
+PYTHON := $(VENV)/bin/python3
+PIP := $(VENV)/bin/pip
+
+up: venv
 	mkdir -p data/mongodb
 	mkdir -p config
-	docker compose up -d
+	podman-compose up -d
+
+venv:
+	python3 -m venv $(VENV)
+	$(PIP) install --upgrade pip
+	$(PIP) install pandas basyx-python-sdk openpyxl pyecma376-2 requests podman-compose
 
 down:
-	docker compose down
+	podman-compose down
 
 logs:
-	docker compose logs -f
+	podman-compose logs -f
 
 clean:
-	docker compose down -v
+	podman-compose down -v
 
 fclean: clean
-	docker compose down --rmi all -v --remove-orphans
+	podman-compose down --rmi all -v --remove-orphans
 	sudo rm -rf data/mongodb
+	rm -rf $(VENV)
 
-.PHONY: up down logs clean fclean run
+run: venv
+	$(PYTHON) main.py
 
-run:
-	python3 main.py
-
-#need to change podman version
+.PHONY: up venv down logs clean fclean run
