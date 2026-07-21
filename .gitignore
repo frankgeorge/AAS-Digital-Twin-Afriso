@@ -1,3 +1,7 @@
 *.xlsx
 data/
 __pycache__/
+
+.env
+.venv/
+certs/
