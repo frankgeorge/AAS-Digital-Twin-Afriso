@@ -110,13 +110,29 @@ def process_excel(excel_path):
         upload_url = "http://localhost:8082/upload"
     else:
         upload_url = "http://localhost:8081/upload" # default fallback
+
+    def get_keycloak_token():
+        token_url = "http://localhost:9096/realms/BaSyx/protocol/openid-connect/token"
+        data = {
+            "grant_type": "password",
+            "client_id": "basyx-admin",
+            "client_secret": "basyx-admin-secret-change-me",
+            "username": "admin",
+            "password": "admin",
+            "scope": "openid"
+        }
+        resp = requests.post(token_url, data=data)
+        resp.raise_for_status()
+        return resp.json()["access_token"]
         
     print(f"Uploading {file_name}.aasx to {upload_url}...")
     
     try:
+        token = get_keycloak_token()
+        headers = {"Authorization": f"Bearer {token}"}
         with open(aasx_path, "rb") as f:
             file_tuple = (os.path.basename(aasx_path), f, "application/asset-administration-shell-package")
-            res = requests.post(upload_url, files={"file": file_tuple})
+            res = requests.post(upload_url, files={"file": file_tuple}, headers=headers)
             print(f"server upload result: {res.status_code} - {res.text}")
     except requests.exceptions.ConnectionError:
         print(f"Warning: Failed to connect to server at {upload_url}. Is the server running?")

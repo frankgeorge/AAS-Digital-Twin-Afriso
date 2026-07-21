@@ -1,0 +1,26 @@
+infrastructures:
+  default: local
+
+  local:
+    name: Local Development
+    template: full
+    components:
+      aasDiscovery:
+        baseUrl: "http://localhost:8084"
+      aasRegistry:
+        baseUrl: "http://localhost:8083"
+      submodelRegistry:
+        baseUrl: "http://localhost:8084"
+      aasRepository:
+        baseUrl: "http://localhost:8080"
+      submodelRepository:
+        baseUrl: "http://localhost:8080"
+      conceptDescriptionRepository:
+        baseUrl: "http://localhost:8080"
+    security:
+      type: oauth2
+      config:
+        flow: auth_code
+        issuer: "http://localhost:9096/realms/BaSyx"
+        clientId: "basyx-web-ui"
+        scope: "openid profile email"
