@@ -39,7 +39,7 @@ check_service "AAS Registry (8083)" "http://localhost:8083/actuator/health" "UP"
 check_service "Submodel Registry (8084)" "http://localhost:8084/actuator/health" "UP"
 
 # 7. AAS Web UI
-check_service "AAS Web UI (3000)" "http://localhost:3000/" "UP"
+check_service "AAS Web UI (3000)" "http://localhost:3000/" "302\|html\|Found"
 
 # 8. MongoDB Ping
 if [ "$(docker inspect -f '{{.State.Health.Status}}' mongo 2>/dev/null)" = "healthy" ]; then

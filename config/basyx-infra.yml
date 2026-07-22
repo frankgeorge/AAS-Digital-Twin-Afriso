@@ -1,0 +1,28 @@
+auth:
+  active: true
+  url: "http://localhost:9999"
+  realm: "basyx"
+  clientId: "basyx-client"
+  tokenUrl: "http://localhost:9999/realms/basyx/protocol/openid-connect/token"
+  authUrl: "http://localhost:9999/realms/basyx/protocol/openid-connect/auth"
+  authFlow: "code"
+  scope: "openid profile email"
+
+security:
+  enabled: true
+  type: "oauth2"
+  authFlow: "code"
+  oauth2Host: "http://localhost:9999/realms/basyx"
+  clientId: "basyx-client"
+  tokenUrl: "http://localhost:9999/realms/basyx/protocol/openid-connect/token"
+  authUrl: "http://localhost:9999/realms/basyx/protocol/openid-connect/auth"
+  scope: "openid profile email"
+
+keycloakFeatureControl: true
+keycloakFeatureControlRolePrefix: ""
+
+aasRepository: "http://localhost:8080"
+submodelRepository: "http://localhost:8080"
+conceptDescriptionRepository: "http://localhost:8080"
+aasRegistry: "http://localhost:8083"
+submodelRegistry: "http://localhost:8084"
