@@ -91,7 +91,7 @@ check-sm:
 # Run comprehensive system health check report
 check-all:
 	@bash health/health.sh
-	
+
 # Test Keycloak authentication and Nginx Gateway access
 check-token:
 	$(PYTHON) check_token.py
@@ -122,11 +122,8 @@ check-logs-post:
 	@echo "Nginx Gateway POST Access Logs"
 	@docker logs nginx 2>&1 | grep "POST" | tail -n 20 || echo "(No POST logs found)"
 
-# View Nginx 401/403 security blocked logs
-check-logs-blocked:
-	@echo "Nginx Gateway Security Blocked Logs"
-	@docker logs nginx 2>&1 | grep -E "401|403" | tail -n 20 || echo "(No blocked logs found)"
+# Output Keycloak logout URL for session reset
+keycloak-logout:
+	@echo "http://localhost:9999/realms/basyx/protocol/openid-connect/logout"
 
-
-
-.PHONY: up venv down logs clean fclean run up-docker logs-docker down-docker clean-docker fclean-docker check-mongo check-nginx check-keycloak check-aas check-aas2 check-aas-registry check-sm check-ui check-all check-token get-user-token get-admin-token add-customer request-partner check-logs-get check-logs-post check-logs-blocked
+.PHONY: up venv down logs clean fclean run up-docker logs-docker down-docker clean-docker fclean-docker check-mongo check-nginx check-keycloak check-aas check-aas2 check-aas-registry check-sm check-ui check-all check-token get-user-token get-admin-token add-customer request-partner check-logs-get check-logs-post check-logs-blocked logout
