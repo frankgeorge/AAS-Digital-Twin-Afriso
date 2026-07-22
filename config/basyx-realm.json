@@ -53,7 +53,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "${env.KEYCLOAK_TEST_ADMIN_PASSWORD}",
+          "value": "1234",
           "temporary": false
         }
       ],
